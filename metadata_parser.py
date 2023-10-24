@@ -1,4 +1,6 @@
 import requests
+import git
+import datetime
 from bs4 import BeautifulSoup
 
 
@@ -34,9 +36,23 @@ class MetadataParser:
             props_name = property.split(":")[-1]
             metadatas[props_name] = content
         return metadatas
-    
+
+    # local_path, token setting needed
+    local_path = 'local_path'   #'C:\Mine\kakao-dev-article'
+    token = 'token'
+
+    def push_to_github(local_path, token):
+        try:
+            repo = git.Repo({local_path})
+            # repo.remotes[remote_name].pull('main')
+            repo.git.add('--all')  # markdown for upload
+            repo.index.commit('update markdown ' + str(datetime.date.today()))
+            repo.git.push(f'https://{token}@github.com/GDGSongDo/kakao-dev-article.git', f'HEAD:main')
+        except Exception as e:
+            print(e)
+
 if __name__ == "__main__":
     url = "https://www.udemy.com/course/learn-flutter-dart-to-build-ios-android-apps/"
     mp = MetadataParser()
     print(mp.get_metadatas(url))
-
+    # mp.push_to_github()
