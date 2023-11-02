@@ -1,4 +1,5 @@
 import requests
+import markdown
 from bs4 import BeautifulSoup
 
 
@@ -34,9 +35,8 @@ class MetadataParser:
             props_name = property.split(":")[-1]
             metadatas[props_name] = content
         return metadatas
-    
+
 if __name__ == "__main__":
     url = "https://www.udemy.com/course/learn-flutter-dart-to-build-ios-android-apps/"
     mp = MetadataParser()
     print(mp.get_metadatas(url))
-
