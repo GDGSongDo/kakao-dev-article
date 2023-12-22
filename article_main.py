@@ -20,31 +20,23 @@ import markdown
 ###
 
 
-def convert_to_markdown(json: dict):
-    for key, value in json.items():
-        if key == "title":
-            result = markdown.markdown("#" + key)
-            print(result)
-        elif key == "url":
-            result = markdown.markdown("##" + key)
-            print(result)
-        else:
-            print(key,value)
-
-
 url = "https://www.udemy.com/course/learn-flutter-dart-to-build-ios-android-apps/"
-mp = parser.MetadataParser()
-print("start")
-print(mp.get_metadatas(url))
-print(convert_to_markdown(mp.get_metadatas(url)))
+data = parser.MetadataParser().get_metadatas(url)
 
-    # {'title': 'Flutter & Dart - The Complete Guide [2023 Edition]'
-    # , 'url': 'https://www.udemy.com/course/learn-flutter-dart-to-build-ios-android-apps/'
-    # , 'description': 'A Complete Guide to the Flutter SDK & Flutter Framework for building native iOS and Android apps'
-    # , 'image': 'https://img-c.udemycdn.com/course/480x270/1708340_7108_5.jpg'
-    # , 'type': 'udemy_com:course'
-    # , 'site_name': 'Udemy'
-    # , 'locale': 'en_US'}
+markdown_text = f"## [{data['title']}]({data['url']})\n\n"
+markdown_text += f"![Course Image]({data['image']})\n\n"
+markdown_text += f"**Description:** {data['description']}\n\n"
+markdown_text += f"**Type:** {data['type']}\n\n"
+markdown_text += f"**Site Name:** {data['site_name']}\n\n"
+markdown_text += f"**Locale:** {data['locale']}"
 
+print(markdown_text)
 
+output = 'test_output.html'
+
+try:
+    with open(output, 'w', encoding='utf-8') as file:
+        file.write(markdown_text)
+except Exception as e:
+    print(f"Error: {e}")
 
