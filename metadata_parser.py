@@ -1,7 +1,6 @@
 import requests
+import markdown
 from bs4 import BeautifulSoup
-
-from util.github_push import GithubPush
 
 
 class MetadataParser:
