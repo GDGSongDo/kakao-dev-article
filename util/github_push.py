@@ -3,6 +3,9 @@ import git
 import datetime
 
 class GithubPush:
+    # local_path, token setting needed
+    local_path = 'local_path'   #'C:\Mine\kakao-dev-article'
+    token = 'token'
 
     def push_to_github(local_path, token):
         try:
